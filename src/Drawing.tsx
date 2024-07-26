@@ -125,6 +125,9 @@ const Drawing: React.FC = () => {
 
   return (
     <>
+      <div style={{ textAlign: "center" }}>
+        <h1>Hangman Game</h1>
+      </div>
       <div className={styles.flex_container}>
         <div
           style={{
