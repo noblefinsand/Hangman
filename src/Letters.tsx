@@ -123,37 +123,41 @@ const Letters: React.FC<DrawingProps> = ({
 
         switch (attempts) {
           case 7:
-            setAttempts(attempts - 1);
+            setAttempts(6);
             setShowRope(true);
             break;
           case 6:
-            setAttempts(attempts - 1);
+            setAttempts(5);
             setShowHead(true);
             break;
           case 5:
-            setAttempts(attempts - 1);
+            setAttempts(4);
             setShowBody(true);
             break;
           case 4:
-            setAttempts(attempts - 1);
+            setAttempts(3);
             setShowLeftArm(true);
             break;
           case 3:
-            setAttempts(attempts - 1);
+            setAttempts(2);
             setShowRightArm(true);
             break;
           case 2:
-            setAttempts(attempts - 1);
+            setAttempts(1);
             setShowLeftLeg(true);
             break;
           case 1:
-            setAttempts(attempts - 1);
+            setAttempts(0);
             setShowRightLeg(true);
+
+            setTimeout(() => {
+              alert("Game Over!");
+            }, 300);
             break;
         }
       }
     } else {
-      alert("No Attempts left");
+      alert("No more attempts!");
     }
   };
 
