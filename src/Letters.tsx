@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./Letters.module.css";
+import { requestWord } from "./RandomWords";
 
 interface DrawingProps {
   setShowRope: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +26,7 @@ const Letters: React.FC<DrawingProps> = ({
   const [correctGuesses, setCorrectGuesses] = useState<string[]>([]);
   const [randomWord, setRandomWord] = useState<string[]>([]);
   const [attempts, setAttempts] = useState<number>(7);
-  const wordList: string[] = ["rigged"];
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGuessedLetter(e.target.value.toLowerCase());
@@ -39,9 +40,17 @@ const Letters: React.FC<DrawingProps> = ({
 
   //Generates new random word on page load
   useEffect(() => {
-    const newRandomWord =
-      wordList[Math.floor(Math.random() * wordList.length)].toLowerCase();
-    setRandomWord(newRandomWord.split(""));
+    const fetchRandomWord = async () => {
+      setLoading(true);
+      const newRandomWord = await requestWord();
+
+      if (newRandomWord) {
+        setRandomWord(newRandomWord.split(""));
+      }
+      setLoading(false);
+    };
+
+    fetchRandomWord();
   }, []);
 
   const randomWordLetters = () => {
@@ -151,8 +160,9 @@ const Letters: React.FC<DrawingProps> = ({
             setShowRightLeg(true);
 
             setTimeout(() => {
-              alert("Game Over!");
-            }, 300);
+              alert(`Game Over! The word was ${randomWord.join("")}`);
+              window.location.reload();
+            }, 200);
             break;
         }
       }
@@ -180,12 +190,13 @@ const Letters: React.FC<DrawingProps> = ({
             flexWrap: "wrap",
           }}
         >
-          {randomWordLetters()}
+          {loading ? "Generating Random Word..." : randomWordLetters()}
         </div>
         <form id="guess" onSubmit={handleFormSubmit}>
           <input
             maxLength={1}
             required
+            pattern="[a-zA-Z]"
             value={guessedLetter}
             onChange={handleChange}
             style={{ width: "250px", height: "30px" }}
