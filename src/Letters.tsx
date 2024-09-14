@@ -21,12 +21,14 @@ const Letters: React.FC<DrawingProps> = ({
   setShowLeftLeg,
   setShowRightLeg,
 }) => {
+  //Main variables
   const [guessedLetter, setGuessedLetter] = useState<string>("");
   const [incorrectGuesses, setIncorrectGuesses] = useState<string[]>([]);
   const [correctGuesses, setCorrectGuesses] = useState<string[]>([]);
   const [randomWord, setRandomWord] = useState<string[]>([]);
   const [attempts, setAttempts] = useState<number>(7);
   const [loading, setLoading] = useState(false);
+  const uniqueLetters = [...new Set(randomWord)];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGuessedLetter(e.target.value.toLowerCase());
@@ -45,14 +47,16 @@ const Letters: React.FC<DrawingProps> = ({
       const newRandomWord = await requestWord();
 
       if (newRandomWord) {
-        setRandomWord(newRandomWord.split(""));
+        setRandomWord(newRandomWord.toLowerCase().split(""));
       }
       setLoading(false);
+      console.log(randomWord);
     };
 
     fetchRandomWord();
   }, []);
 
+  //Updates UI of the spelled out word
   const randomWordLetters = () => {
     return randomWord.map(
       (item, index): JSX.Element => (
@@ -123,10 +127,27 @@ const Letters: React.FC<DrawingProps> = ({
     );
   };
 
+  //Main display logic for guesses
   const updateLetters = () => {
     if (attempts > 0) {
       if (randomWord.includes(guessedLetter)) {
-        setCorrectGuesses((prev) => [...prev, guessedLetter]);
+        setCorrectGuesses((prev) => {
+          const updatedGuesses = [...prev, guessedLetter];
+
+          // Check if user has won after adding the new guess
+          if (updatedGuesses.length === uniqueLetters.length) {
+            setTimeout(() => {
+              alert(
+                `Congratulations! You've guessed the word ${randomWord.join(
+                  ""
+                )}`
+              );
+              window.location.reload();
+            }, 200);
+          }
+
+          return updatedGuesses;
+        });
       } else {
         setIncorrectGuesses((prev) => [...prev, guessedLetter]);
 
