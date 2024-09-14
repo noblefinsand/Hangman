@@ -50,7 +50,6 @@ const Letters: React.FC<DrawingProps> = ({
         setRandomWord(newRandomWord.toLowerCase().split(""));
       }
       setLoading(false);
-      console.log(randomWord);
     };
 
     fetchRandomWord();
