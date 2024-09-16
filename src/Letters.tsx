@@ -222,6 +222,7 @@ const Letters: React.FC<DrawingProps> = ({
         </div>
         <form id="guess" onSubmit={handleFormSubmit}>
           <input
+            autoFocus
             maxLength={1}
             required
             pattern="[a-zA-Z]"
