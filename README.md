@@ -5,6 +5,7 @@ A classic Hangman game built using React and TypeScript, where the hangman figur
 ## Features
 
 - Interactive gameplay with letter guessing.
+- Random word generation using the Fetch API on page load.
 - The hangman character is drawn incrementally with each incorrect guess using `div` elements and flexbox.
 - Alerts for game win or loss conditions.
 - Clean and responsive UI design.
@@ -47,6 +48,7 @@ The game will be available at `http://localhost:3000`.
 
 - React (with hooks for state management)
 - TypeScript
+- Fetch API for random word generation
 - Flexbox for hangman drawing
 - CSS for overall styling
 
