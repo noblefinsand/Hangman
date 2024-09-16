@@ -55,3 +55,5 @@ The game will be available at `http://localhost:3000`.
 - Implement difficulty levels.
 - Add a scoring system.
 - Multiplayer mode.
+- Start Screen.
+- Game Over Screen.
