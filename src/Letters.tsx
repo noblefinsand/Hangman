@@ -130,23 +130,27 @@ const Letters: React.FC<DrawingProps> = ({
   const updateLetters = () => {
     if (attempts > 0) {
       if (randomWord.includes(guessedLetter)) {
-        setCorrectGuesses((prev) => {
-          const updatedGuesses = [...prev, guessedLetter];
+        if (correctGuesses.includes(guessedLetter)) {
+          alert("You already guess that letter!");
+        } else {
+          setCorrectGuesses((prev) => {
+            const updatedGuesses = [...prev, guessedLetter];
 
-          // Check if user has won after adding the new guess
-          if (updatedGuesses.length === uniqueLetters.length) {
-            setTimeout(() => {
-              alert(
-                `Congratulations! You've guessed the word ${randomWord.join(
-                  ""
-                )}`
-              );
-              window.location.reload();
-            }, 200);
-          }
+            // Check if user has won after adding the new guess
+            if (updatedGuesses.length === uniqueLetters.length) {
+              setTimeout(() => {
+                alert(
+                  `Congratulations! You've guessed the word ${randomWord.join(
+                    ""
+                  )}`
+                );
+                window.location.reload();
+              }, 200);
+            }
 
-          return updatedGuesses;
-        });
+            return updatedGuesses;
+          });
+        }
       } else {
         setIncorrectGuesses((prev) => [...prev, guessedLetter]);
 
