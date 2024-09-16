@@ -131,7 +131,7 @@ const Letters: React.FC<DrawingProps> = ({
     if (attempts > 0) {
       if (randomWord.includes(guessedLetter)) {
         if (correctGuesses.includes(guessedLetter)) {
-          alert("You already guess that letter!");
+          alert("You already guessed that letter!");
         } else {
           setCorrectGuesses((prev) => {
             const updatedGuesses = [...prev, guessedLetter];
@@ -142,7 +142,7 @@ const Letters: React.FC<DrawingProps> = ({
                 alert(
                   `Congratulations! You've guessed the word ${randomWord.join(
                     ""
-                  )}`
+                  )}.`
                 );
                 window.location.reload();
               }, 200);
@@ -152,42 +152,46 @@ const Letters: React.FC<DrawingProps> = ({
           });
         }
       } else {
-        setIncorrectGuesses((prev) => [...prev, guessedLetter]);
+        if (incorrectGuesses.includes(guessedLetter)) {
+          alert("You already guessed that letter!");
+        } else {
+          setIncorrectGuesses((prev) => [...prev, guessedLetter]);
 
-        switch (attempts) {
-          case 7:
-            setAttempts(6);
-            setShowRope(true);
-            break;
-          case 6:
-            setAttempts(5);
-            setShowHead(true);
-            break;
-          case 5:
-            setAttempts(4);
-            setShowBody(true);
-            break;
-          case 4:
-            setAttempts(3);
-            setShowLeftArm(true);
-            break;
-          case 3:
-            setAttempts(2);
-            setShowRightArm(true);
-            break;
-          case 2:
-            setAttempts(1);
-            setShowLeftLeg(true);
-            break;
-          case 1:
-            setAttempts(0);
-            setShowRightLeg(true);
+          switch (attempts) {
+            case 7:
+              setAttempts(6);
+              setShowRope(true);
+              break;
+            case 6:
+              setAttempts(5);
+              setShowHead(true);
+              break;
+            case 5:
+              setAttempts(4);
+              setShowBody(true);
+              break;
+            case 4:
+              setAttempts(3);
+              setShowLeftArm(true);
+              break;
+            case 3:
+              setAttempts(2);
+              setShowRightArm(true);
+              break;
+            case 2:
+              setAttempts(1);
+              setShowLeftLeg(true);
+              break;
+            case 1:
+              setAttempts(0);
+              setShowRightLeg(true);
 
-            setTimeout(() => {
-              alert(`Game Over! The word was ${randomWord.join("")}`);
-              window.location.reload();
-            }, 200);
-            break;
+              setTimeout(() => {
+                alert(`Game Over! The word was ${randomWord.join("")}.`);
+                window.location.reload();
+              }, 200);
+              break;
+          }
         }
       }
     } else {
